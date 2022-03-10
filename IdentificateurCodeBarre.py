@@ -1,4 +1,3 @@
-
 # On commence par upload les infos concernant les produits ATTENTION --> Si vous voulez tester il faut placer le bon lien de l'emplacement
 # de sauvegarde sur votre ordi du fichier upcPrice
 fichier_UPC_A = open(rb"C:\Users\spart\Desktop\Hiver2022\Design2\Design2\upcPrice.txt", encoding="utf8", errors='ignore')
@@ -6,11 +5,11 @@ contenu = fichier_UPC_A.read()
 liste_contenu = contenu.split("\n")
 
 #La corrrespondance de ce que représente les nombres binaires en UPC-A pour les côtés gauche et droit Left Right
-dicoL = [{"0001101": "0"}, {"0011001": "1"}, {"0010011": "2"}, {"0111101": "3"}, {"0100011": "4"},
-{"0110001": "5"}, {"0101111": "6"}, {"0111011": "7"}, {"0110111": "8"}, {"0001011", "9"}]
+dicoL = {"0001101": "0", "0011001": "1", "0010011": "2", "0111101": "3", "0100011": "4",
+"0110001": "5", "0101111": "6", "0111011": "7", "0110111": "8", "0001011": "9"}
 
-dicoR = [{"1110010" "0"}, {"1100110": "1"}, {"1101100": "2"}, {"1000010": "3"}, {"1011100": "4"},
-{"1001110": "5"}, {"1010000": "6"}, {"1000100", "7"}, {"1001000", "8"}, {"1110100", "9"}]
+dicoR = {"1110010" : "0", "1100110": "1", "1101100": "2", "1000010": "3", "1011100": "4",
+"1001110": "5", "1010000": "6", "1000100": "7", "1001000": "8", "1110100": "9"}
 
 
 # Fonction qui serait appelée au lancement du code (juste une fois car prend du temps) pour placer les infos suivantes dans un dico :
@@ -45,8 +44,7 @@ def decodage(binaire):
             if stockage == ["0","1" ,"0" ]:
                 continue
             stockage.pop(0)
-        if len(stockage) in range(51, 94):
-            print(bit)
+        if len(stockage) in range(52, 94):
             if int(bit) == 0:
                 bit = '1'
             elif int(bit) == 1:
@@ -56,12 +54,23 @@ def decodage(binaire):
 
         if len(stockage) > 91:
             break
-    return stockage[3:]
-            
-            
 
-    Code_barre = ["Code_barre", "Code_barre inversé"]
-    return stockage
+    print(' '.join(stockage))
+    print(' '.join(stockage[3:45]))
+    print(' '.join(stockage[50:]))
+    stockage = "".join(stockage[3:46] + stockage[50:])
+
+    decoupage = [stockage[i:i+7] for i in range(0, len(stockage), 7)]
+    nombre = ''
+    for position, paquet in enumerate(decoupage):
+        if position in range(0, 6):
+            if paquet in dicoL:
+                nombre += dicoL[paquet]
+
+        else:
+            if paquet in dicoR:
+                nombre += dicoR[paquet]
+    return nombre
 
 # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre
 # banque de données.
