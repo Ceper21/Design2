@@ -15,8 +15,6 @@ dicoR = [{"1110010" "0"}, {"1100110": "1"}, {"1101100": "2"}, {"1000010": "3"}, 
 
 # Fonction qui serait appelée au lancement du code (juste une fois car prend du temps) pour placer les infos suivantes dans un dico :
 # {clée = Code-barre : [Nom du produit, Prix]} Bref à travailler... 
-
-
 def base_de_donnees(dico):
     for article in liste_contenu:
         elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
@@ -38,8 +36,32 @@ def base_de_donnees(dico):
 # laser peut aller dans les deux sens ou que le code peut être à l'envers 
 def decodage(binaire):
 
+    stockage = []
+    compteur = 1
+    for bit in binaire:
+        
+        stockage.append(bit)
+        if len(stockage) == 3:
+            if stockage == ["0","1" ,"0" ]:
+                continue
+            stockage.pop(0)
+        if len(stockage) in range(51, 97):
+            print(bit)
+            if int(bit) == 0:
+                bit = '1'
+            elif int(bit) == 1:
+                bit = '0'
+            stockage.pop(-1)
+            stockage.append(bit)
+
+        if len(stockage) > 89:
+            break
+    return stockage[3:]
+            
+            
+
     Code_barre = ["Code_barre", "Code_barre inversé"]
-    return Code_barre
+    return stockage
 
 # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre
 # banque de données.
