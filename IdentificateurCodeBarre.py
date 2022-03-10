@@ -19,16 +19,17 @@ def base_de_donnees(dico):
         elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
         if len(elements[0]) == 13:
             if len(elements) == 2:
-                dico.update({elements[0][1:]: [{"Nom": "Non-défini"}, {"Quantité": "Non-défini"}, {"Prix": "Non-défini"}]})
+                dico.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
 
             elif len(elements) == 3:
-                dico.update({elements[0][1:]: [{"Nom": elements[-1]}, {"Quantité": elements[1]}, {"Prix": "Non-défini"}]})
+                dico.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
 
             elif int(elements[0][0]) == 0:
-                dico.update({elements[0][1:]: [{"Nom": elements[2]}, {"Quantité": elements[1]}, {"Prix": elements[-1]}]})
+                dico.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
         if len(elements[0]) > 13:
-            dico.update({elements[0][2:]: [{"Nom": elements[2]}, {"Quantité": elements[1]}, {"Prix": elements[-1]}]})
-    return (dico, len(liste_contenu))
+            dico.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+    return (dico)
+
 
 # Fonction servant à convertir le nombre binaire provenant de l'Arduino en nombre décimale
 # On doit également donner une version inversée du code reçut en raison du fait que le
@@ -67,21 +68,16 @@ def decodage(binaire):
                 nombre += dicoR[paquet]
     return nombre
 
-# On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre
-# banque de données.
-def verificationPresence(Code_barre, dico):
+# On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
+def verificationPresence(Code, dico):
 
-    if Code_barre in dico:
-        print(dico)
-        return dico[Code_barre]
-
+    if Code in dico:
+        return True
     else:
-        print(dico)
         return False
 
 # Fonction qui sert à valider le dernier chiffre du code reçut. Sert à valider le bon sens 
 # du code, mais aussi évite d'aller fouiller dans le dictionnaire de produits (sauve du temps)
-
 def validationDernierChiffre(Code_barre):
     convert = map(int, Code_barre)
     code = list(convert)
