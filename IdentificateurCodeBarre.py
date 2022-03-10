@@ -1,9 +1,9 @@
 
 # On commence par upload les infos concernant les produits ATTENTION --> Si vous voulez tester il faut placer le bon lien de l'emplacement
 # de sauvegarde sur votre ordi du fichier upcPrice
-fichier_UPC_A = open(rb"C:\Users\spart\Desktop\Hiver2022\Design2\CodeCodeBarre\upcPrice.txt", encoding="utf8", errors='ignore')
+fichier_UPC_A = open(rb"C:\Users\spart\Desktop\Hiver2022\Design2\Design2\upcPrice.txt", encoding="utf8", errors='ignore')
 contenu = fichier_UPC_A.read()
-liste_contenu = contenu. split("\n")
+liste_contenu = contenu.split("\n")
 
 #La corrrespondance de ce que représente les nombres binaires en UPC-A pour les côtés gauche et droit Left Right
 dicoL = [{"0001101": "0"}, {"0011001": "1"}, {"0010011": "2"}, {"0111101": "3"}, {"0100011": "4"},
@@ -17,16 +17,21 @@ dicoR = [{"1110010" "0"}, {"1100110": "1"}, {"1101100": "2"}, {"1000010": "3"}, 
 # {clée = Code-barre : [Nom du produit, Prix]} Bref à travailler... 
 
 
-def base_de_donnees():
-    dico = {}
+def base_de_donnees(dico):
     for article in liste_contenu:
-        elements = article.split(",")
-        dernier = elements[-1]
-        if dernier.isalpha:
-            dernier = "0"
-            break
-        dico.update({elements[0]: dernier})
-    return dico
+        elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
+        if len(elements[0]) == 13:
+            if len(elements) == 2:
+                dico.update({elements[0][1:]: [{"Nom": "Non-défini"}, {"Quantité": "Non-défini"}, {"Prix": "Non-défini"}]})
+
+            elif len(elements) == 3:
+                dico.update({elements[0][1:]: [{"Nom": elements[-1]}, {"Quantité": elements[1]}, {"Prix": "Non-défini"}]})
+
+            elif int(elements[0][0]) == 0:
+                dico.update({elements[0][1:]: [{"Nom": elements[2]}, {"Quantité": elements[1]}, {"Prix": elements[-1]}]})
+        if len(elements[0]) > 13:
+            dico.update({elements[0][2:]: [{"Nom": elements[2]}, {"Quantité": elements[1]}, {"Prix": elements[-1]}]})
+    return (dico, len(liste_contenu))
 
 # Fonction servant à convertir le nombre binaire provenant de l'Arduino en nombre décimale
 # On doit également donner une version inversée du code reçut en raison du fait que le
