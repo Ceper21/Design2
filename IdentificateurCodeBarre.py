@@ -39,13 +39,13 @@ def decodage(binaire):
     stockage = []
     compteur = 1
     for bit in binaire:
-        
         stockage.append(bit)
+
         if len(stockage) == 3:
             if stockage == ["0","1" ,"0" ]:
                 continue
             stockage.pop(0)
-        if len(stockage) in range(51, 97):
+        if len(stockage) in range(51, 94):
             print(bit)
             if int(bit) == 0:
                 bit = '1'
@@ -54,7 +54,7 @@ def decodage(binaire):
             stockage.pop(-1)
             stockage.append(bit)
 
-        if len(stockage) > 89:
+        if len(stockage) > 91:
             break
     return stockage[3:]
             
