@@ -44,7 +44,7 @@ def decodage(binaire):
             if stockage == ["0","1" ,"0" ]:
                 continue
             stockage.pop(0)
-        if len(stockage) in range(52, 94):
+        if len(stockage) in range(50, 94):
             if int(bit) == 0:
                 bit = '1'
             elif int(bit) == 1:
@@ -54,12 +54,7 @@ def decodage(binaire):
 
         if len(stockage) > 91:
             break
-
-    print(' '.join(stockage))
-    print(' '.join(stockage[3:45]))
-    print(' '.join(stockage[50:]))
-    stockage = "".join(stockage[3:46] + stockage[50:])
-
+    stockage = "".join(stockage[3:45] + stockage[50:])
     decoupage = [stockage[i:i+7] for i in range(0, len(stockage), 7)]
     nombre = ''
     for position, paquet in enumerate(decoupage):
