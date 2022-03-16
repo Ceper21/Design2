@@ -34,6 +34,9 @@ def base_de_donnees(dico):
 # Fonction servant à convertir le nombre binaire provenant de l'Arduino en nombre décimale
 # On doit également donner une version inversée du code reçut en raison du fait que le
 # laser peut aller dans les deux sens ou que le code peut être à l'envers 
+#
+# input: la séquence binaire associée à un code-barre obtenue de l'Arduino
+# output: le code-barre de 12 chiffres obtenus
 def decodage(binaire):
 
     stockage = []
