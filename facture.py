@@ -23,3 +23,9 @@ class Facture:
                 prix, total_px = element["Prix"]
                 item_info = {'Article': nom, 'Quantite_indiv': quantite, 'Quantite': total_qt, 'Prix_indiv': prix, 'Prix': total_px}
                 self.facture.update(str(item): item_info)
+
+    def totalFacture(self):
+        total = 0
+        for item in self.facture:
+            total += item["Prix"]
+        return(total)
