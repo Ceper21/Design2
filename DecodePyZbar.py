@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-string = "11000010110001001100011"
+#string = "010"+"011101100011010110001010111101111010010011"+"01010"+"111001010010001001110111010010111001000010"+"010"
+string = "10100011010010011001001100011010001101000110101010110011011011001001110111001010000101000010101"
 b = bytearray(b'')
 im_array = bytearray(b'')
 for i in string:
@@ -9,10 +10,10 @@ for i in string:
         b.extend(b'\xff')
     if i == '0':
         b.extend(b'\x00')
-for i in range(7):
+for i in range(20):
     im_array.extend(b)
 
-code = np.array([int(i) for i in im_array]).reshape(7, len(string))
+code = np.array([int(i) for i in im_array]).reshape(20, len(string))
 plt.imshow(code, 'gray')
 plt.show()
 
