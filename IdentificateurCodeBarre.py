@@ -1,6 +1,6 @@
 # On commence par upload les infos concernant les produits ATTENTION --> Si vous voulez tester il faut placer le bon lien de l'emplacement
 # de sauvegarde sur votre ordi du fichier upcPrice
-fichier_UPC_A = open(rb"C:\Users\spart\Desktop\Hiver2022\Design2\Design2\upcPrice.txt", encoding="utf8", errors='ignore')
+fichier_UPC_A = open(rb"upcPrice.txt", encoding="utf8", errors='ignore')
 contenu = fichier_UPC_A.read()
 liste_contenu = contenu.split("\n")
 
