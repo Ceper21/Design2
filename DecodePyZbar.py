@@ -20,9 +20,11 @@ def show(im_code, string01):
     plt.imshow(code, 'gray')
     plt.show()
 
-def decoder(tuple):
+def decoder(stringin):
     # Trouver les code-barres dans l'image
-    codes_trouves = pyzbar.decode(tuple)
+    string = convertToBytes(stringin)
+    myTuple = (string, len(stringin), hauteur)
+    codes_trouves = pyzbar.decode(myTuple)
     return(codes_trouves)
 
 #pour les tests (séquence de bits et non le signal)
@@ -35,9 +37,20 @@ def flipIt(stringin):
             stringout += '1'
     return(stringout)
 
-# code pour tester 
-# string = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
 
+# code pour tester (version mise à jour)
+
+# stringToFlip = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
+# stringTest = flipIt(stringToFlip)
+# codes = decoder(stringTest)
+# for obj in codes:
+#     print('Type : ', obj.type)
+#     print('Data : ', obj.data,'\n')
+
+
+# code pour tester version1 (n'est plus à jour)
+
+# string = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
 # stringNotFlip = flipIt(string)
 # string8 = convertToBytes(stringNotFlip)
 # print(type(string8))
