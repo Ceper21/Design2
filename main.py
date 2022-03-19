@@ -15,14 +15,21 @@ if __name__ == "__main__":
     ser = serial.Serial('COM5', 9600, timeout=1)
     time.sleep(2)
 
-    for i in range(50):
+    data = ""
+    while(ser):
         photodiode_value = ser.readline()    #read a byte
         if photodiode_value:
             string = photodiode_value.decode()  #Converting the byte string to a unicode string
             real_string = string.strip()
-            print(real_string)
-    
-    
+            data += real_string
+            code = decoder(data)
+            if code != []:
+                for obj in code:
+                    print('Type : ', obj.type)
+                    print('Data : ', obj.data,'\n')
+                data = ''
+
+
 
     
     ser.close()
