@@ -3,6 +3,8 @@ import time
 from DecodePyZbar import decoder
 from IdentificateurCodeBarre import base_de_donnees, decodage, verificationPresence, validationDernierChiffre
 from facture import Facture
+from Interface import Interface
+from tkinter import *
 
 
 #binaire = "1111111001100011"+"010"+ 6*"0001101" + "01010" + 6*"0001101" + "010"+ "000011010" # à enlever plus tard (test)
@@ -41,3 +43,9 @@ if __name__ == "__main__":
     #print(verificationPresence(Code, dico))
     #x = dico["000000000000"]
     #print(x)
+
+root = Tk()
+app = Interface(root)
+root.title('Identification de code-barres')
+root.geometry('1000x300') 
+root.mainloop()
