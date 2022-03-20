@@ -40,12 +40,13 @@ def flipIt(stringin):
 
 # code pour tester (version mise à jour)
 
-# stringToFlip = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
-# stringTest = flipIt(stringToFlip)
-# codes = decoder(stringTest)
-# for obj in codes:
-#     print('Type : ', obj.type)
-#     print('Data : ', obj.data,'\n')
+#stringToFlip = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
+stringToFlip = '00000000000000010100011010010011010111101100010110111001001101010111001011100101110010100111010000101001110101000000000000000000'
+stringTest = flipIt(stringToFlip)
+codes = decoder(stringTest)
+for obj in codes:
+    print('Type : ', obj.type)
+    print('Data : ', obj.data,'\n')
 
 
 # code pour tester version1 (n'est plus à jour)
