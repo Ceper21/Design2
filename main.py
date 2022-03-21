@@ -1,7 +1,7 @@
 from numpy import true_divide
 import serial 
 import time 
-from DecodePyZbar import decoder
+from DecodePyZbar import decoder, decoderWrite
 from IdentificateurCodeBarre import base_de_donnees, decodage, verificationPresence, validationDernierChiffre
 #from facture import Facture
 from facture import Facture
@@ -12,20 +12,24 @@ from tkinter import *
 # Simple test pour vérifier que les fonctions fonctionnent bien
 if __name__ == "__main__":
 
-    ser = serial.Serial('COM4', 9600, timeout=1)
+    ser = serial.Serial('COM6', 250000, timeout=1)
 
     dataArray = []
+    counter = 0
 
     while True:
-        data = ser.readline()
-        dataArray.append(str(data).strip("b'\\r\\n"))
-        print(dataArray)
-        code = decoder(data)
-        if code != []:
-            for obj in code:
-                print('Type : ', obj.type)
-                print('Data : ', obj.data,'\n')
-            dataArray = []
+        counter += 1
+        data = ser.read(1)
+        print(data)
+        dataArray.append(data)
+        if counter == 1000:
+            print(dataArray)
+            code = decoderWrite(data)
+            if code != []:
+                for obj in code:
+                    print('Type : ', obj.type)
+                    print('Data : ', obj.data,'\n')
+                dataArray = []
     #facture = Facture.facture()
     #dico = base_de_donnees(dico)
     #Code = decodage(binaire)
