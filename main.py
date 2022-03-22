@@ -1,6 +1,7 @@
 import serial 
 import time 
 import struct
+from playsound import playsound
 from DecodePyZbar import decoderWrite, show, convertToBIT
 from IdentificateurCodeBarre import Dico
 from facture import Facture
@@ -29,6 +30,7 @@ if __name__ == "__main__":
             if code != []:
                 for obj in code:
                     print('Code reçu : ', obj.data,'\n')
+                    playsound('Barcode-scanner-beep-sound.mp3')
                     if dico.verificationPresence(obj) == True:
                         facture.updateFacture(dico, obj)
             dataArray = []
