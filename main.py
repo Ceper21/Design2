@@ -17,6 +17,7 @@ if __name__ == "__main__":
     dataArray = []
     FORMAT = '<B'
     facture = Facture.facture()
+    dico = base_de_donnees(dico)
 
     while True:
         data = ser.read(1)
@@ -29,8 +30,8 @@ if __name__ == "__main__":
             show(dataShow, sizeShow)
             if code != []:
                 for obj in code:
-                    print('Type : ', obj.type)
-                    print('Data : ', obj.data,'\n')
+                    print('Code reçu : ', obj.data,'\n')
+                
             dataArray = []
         dataArray.append(send)
 

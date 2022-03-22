@@ -11,25 +11,36 @@ dicoL = {"0001101": "0", "0011001": "1", "0010011": "2", "0111101": "3", "010001
 dicoR = {"1110010" : "0", "1100110": "1", "1101100": "2", "1000010": "3", "1011100": "4",
 "1001110": "5", "1010000": "6", "1000100": "7", "1001000": "8", "1110100": "9"}
 
+class Dico:
+    def __init__(self):
+        self.dico = {}
 
-# Fonction qui serait appelée au lancement du code (juste une fois car prend du temps) pour placer les infos suivantes dans un dico :
-# {clée = Code-barre : [Nom du produit, Prix]} Bref à travailler... 
-def base_de_donnees(dico):
-    for article in liste_contenu:
-        elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
-        if len(elements[0]) == 13:
-            if len(elements) == 2:
-                dico.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
+    # Fonction qui serait appelée au lancement du code (juste une fois car prend du temps) pour placer les infos suivantes dans un dico :
+    # {clée = Code-barre : [Nom du produit, Prix]} Bref à travailler... 
+    def initDico(self):
+        for article in liste_contenu:
+            elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
+            if len(elements[0]) == 13:
+                if len(elements) == 2:
+                    self.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
 
-            elif len(elements) == 3:
-                dico.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
+                elif len(elements) == 3:
+                    self.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
 
-            elif int(elements[0][0]) == 0:
-                dico.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
-        if len(elements[0]) > 13:
-            dico.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
-    return (dico)
+                elif int(elements[0][0]) == 0:
+                    self.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+            if len(elements[0]) > 13:
+                self.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+        return (self)
+        
+    # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
+    def verificationPresence(Code):
+        if Code in self.dico:
+            return True
+        else:
+            return False
 
+# Code qui aurait servi pour faire un algo, mais on ignore maintenant
 
 # Fonction servant à convertir le nombre binaire provenant de l'Arduino en nombre décimale
 # On doit également donner une version inversée du code reçut en raison du fait que le
@@ -70,14 +81,6 @@ def decodage(binaire):
             if paquet in dicoR:
                 nombre += dicoR[paquet]
     return nombre
-
-# On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
-def verificationPresence(Code, dico):
-
-    if Code in dico:
-        return True
-    else:
-        return False
 
 # Fonction qui sert à valider le dernier chiffre du code reçut. Sert à valider le bon sens 
 # du code, mais aussi évite d'aller fouiller dans le dictionnaire de produits (sauve du temps)
