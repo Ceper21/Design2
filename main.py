@@ -2,7 +2,7 @@ from numpy import true_divide
 import serial 
 import time 
 from DecodePyZbar import decoderWrite, show, convertToBIT
-from IdentificateurCodeBarre import base_de_donnees, decodage, verificationPresence, validationDernierChiffre
+from IdentificateurCodeBarre import Dico
 import struct
 from facture import Facture
 # from Interface import Interface
@@ -17,7 +17,8 @@ if __name__ == "__main__":
     dataArray = []
     FORMAT = '<B'
     facture = Facture.facture()
-    dico = base_de_donnees(dico)
+    dico = Dico.dico()
+    dico.initDico()
 
     while True:
         data = ser.read(1)
@@ -31,7 +32,8 @@ if __name__ == "__main__":
             if code != []:
                 for obj in code:
                     print('Code reçu : ', obj.data,'\n')
-                
+                    if dico.verificationPresence(obj) == True:
+                        facture.updateFacture(dico, obj)
             dataArray = []
         dataArray.append(send)
 

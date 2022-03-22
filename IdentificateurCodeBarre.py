@@ -34,11 +34,11 @@ class Dico:
         return (self)
         
     # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
-    def verificationPresence(Code):
+    def verificationPresence(self, Code):
         if Code in self.dico:
-            return True
+            return(True)
         else:
-            return False
+            return(False)
 
 # Code qui aurait servi pour faire un algo, mais on ignore maintenant
 
