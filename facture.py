@@ -1,5 +1,4 @@
-from IdentificateurCodeBarre import base_de_donnees, decodage, verificationPresence, validationDernierChiffre
-
+from IdentificateurCodeBarre import Dico
 class Facture:
 
     def __init__(self):
