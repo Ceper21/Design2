@@ -11,6 +11,8 @@ def convertToBytes(string01):
             liste.append(0)
         if bit == '1':
             liste.append(255)
+        else:
+            continue
     counter = len(liste)
     arrayBytes = bytes([i for i in liste])
     arrayBytes = arrayBytes*hauteur
@@ -19,17 +21,20 @@ def convertToBytes(string01):
 def convertToBIT(string01):
     liste = []
     for bit in string01:
-        if bit == b'\x00':
+        if bit == 0:
             liste.append(0)
-        if bit == b'\x01':
+        if bit == 1:
             liste.append(255)
+        else:
+            continue
     counter = len(liste)
     arrayBytes = bytes([i for i in liste])
+    print('yoooooo', arrayBytes)
     arrayBytes = arrayBytes*hauteur
     return(arrayBytes, counter)
 
-def show(im_code, string01):
-    code = np.array([int(i) for i in im_code]).reshape(hauteur, len(string01))
+def show(im_code, largeur):
+    code = np.array([int(i) for i in im_code]).reshape(hauteur, largeur)
     plt.imshow(code, 'gray')
     plt.show()
 
@@ -37,7 +42,6 @@ def decoder(stringin):
     # Trouver les code-barres dans l'image à partir de serial.print dans Arduino
     string, counter = convertToBytes(stringin)
     myTuple = (string, counter, hauteur)
-    print(myTuple)
     codes_trouves = pyzbar.decode(myTuple)
     return(codes_trouves)
 
@@ -62,9 +66,10 @@ def flipIt(stringin):
 
 # code pour tester avec write
 
-# stringTest = [b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', 
-# b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01']
+#stringTest = [b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00',  b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01']
+# stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # stringC, counter = convertToBIT(stringTest)
+# show(stringC, counter)
 # codes = decoderWrite(stringTest)
 # for obj in codes:
 #     print('Type : ', obj.type)
@@ -88,7 +93,7 @@ def flipIt(stringin):
 # #print(stringNotFlip)
 # string8, counter = convertToBytes(stringNotFlip)
 # #print(string8)
-# show(string8, string)
+# show(string8, counter)
 # codes = decoder(stringNotFlip)
 # for obj in codes:
 #     print('Type : ', obj.type)
