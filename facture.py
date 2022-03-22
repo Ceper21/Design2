@@ -29,3 +29,10 @@ class Facture:
         for item in self.facture:
             total += item["Prix"]
         return(total)
+
+    def totalFactureTaxe(self):
+        total = self.totalFacture()
+        totalTPS = total*0.05
+        totalTVQ = total*0.09975
+        totalTaxe = total*1.14975
+        return(totalTPS, totalTVQ, totalTaxe)
