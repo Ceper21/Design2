@@ -7,9 +7,9 @@ hauteur = 50
 def convertToBytes(string01):
     liste = []
     for bit in string01:
-        if bit == '0':
+        if str(bit) == '0':
             liste.append(0)
-        if bit == '1':
+        if str(bit) == '1':
             liste.append(255)
         else:
             continue
@@ -66,15 +66,15 @@ def flipIt(stringin):
 
 # code pour tester avec write
 
-stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-stringTest = flipIt(stringTest)
-stringC, counter = convertToBIT(stringTest)
-show(stringC, counter)
-codes = decoderWrite(stringTest)
-for obj in codes:
-    print('Type : ', obj.type)
-    print('Data : ', obj.data,'\n')
+# stringTest = flipIt(stringTest)
+# stringC, counter = convertToBIT(stringTest)
+# show(stringC, counter)
+# codes = decoderWrite(stringTest)
+# for obj in codes:
+#     print('Type : ', obj.type)
+#     print('Data : ', obj.data,'\n')
 
 # code pour tester (version mise à jour)
 

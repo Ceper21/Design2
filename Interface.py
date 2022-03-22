@@ -3,16 +3,18 @@ from tkinter.ttk import *
 from tkinter import ttk, font
 from facture import Facture
 
+from IdentificateurCodeBarre import Dico
+
 class Interface:
 
-    def __init__(self, contour):
+    def __init__(self, contour, facture):
 
-        def AfficherFacture():
+        def AfficherFacture(facture):
             self.nouvellefenetre = tk.Toplevel(self.contour)
             self.nouvellefenetre.title("Facture")
             self.nouvellefenetre.geometry("400x500")
-            label = Label(self.nouvellefenetre, text ='Voici une facture')
-            #label = Label(self.nouvellefenetre, text = Facture.facture())
+            #label = Label(self.nouvellefenetre, text ='Voici une facture')
+            label = Label(self.nouvellefenetre, text = facture.printFacture())
             label.pack()
         
         self.contour = contour
@@ -51,11 +53,15 @@ class Interface:
 
         self.blackbutton = tk.Button(self.contour, text="Imprimer le reçu",fg="black", height = 2, width = 20) #Mettre le calcul de sommation en commande + affichage de la facture
         self.blackbutton['font'] = self.f2
-        self.blackbutton.bind("<Button>", lambda e: AfficherFacture())
+        self.blackbutton.bind("<Button>", lambda e: AfficherFacture(facture))
         self.blackbutton.pack(side = tk.BOTTOM)
 
+dico = Dico()
+dico.initDico()
+facture = Facture()
+facture.updateFacture(dico, {'Article': 'Pomme', 'Quantite_indiv': 3, 'Quantite': 1, 'Prix_indiv': 3, 'Prix': 4})
 root = tk.Tk()
-app = Interface(root)
+app = Interface(root, facture)
 root.title('Identification de code-barres')
 root.geometry('1000x300') 
 root.mainloop()

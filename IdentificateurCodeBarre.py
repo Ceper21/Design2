@@ -22,15 +22,15 @@ class Dico:
             elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
             if len(elements[0]) == 13:
                 if len(elements) == 2:
-                    self.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
+                    self.dico.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
 
                 elif len(elements) == 3:
-                    self.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
+                    self.dico.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
 
                 elif int(elements[0][0]) == 0:
-                    self.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+                    self.dico.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
             if len(elements[0]) > 13:
-                self.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+                self.dico.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
         return (self)
         
     # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.

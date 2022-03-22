@@ -14,8 +14,8 @@ if __name__ == "__main__":
 
     dataArray = []
     FORMAT = '<B'
-    facture = Facture.facture()
-    dico = Dico.dico()
+    facture = Facture()
+    dico = Dico()
     dico.initDico()
 
     while True:

@@ -28,3 +28,15 @@ class Facture:
         totalTVQ = total*0.09975
         totalTaxe = total*1.14975
         return(totalTPS, totalTVQ, totalTaxe)
+
+    def printFacture(self):
+        for i in self.facture:
+            string += str(self.facture['Article']) +'\n'
+            string += "\t {qut} à {prixInd}\t\t\t {prix}$\n".format(qut = str(self.facture['Quantite']), prixInd=str(self.facture['Prix_indiv']), prix=str(self.facture['Prix']))
+        TPS, TVQ, totalTaxe = self.facture.totalFactureTaxe()
+        string += '$' + str(self.facture.totalFacture()) + '\n'
+        string += 'TPS    $' + str(TPS) + '\n'
+        string += 'TVQ    $' + str(TVQ) + '\n'
+        string += 'TOTAL  $' + str(totalTaxe) + '\n'
+        string += "Merci d'avoir magasiner chez nous!"
+        return(string)
