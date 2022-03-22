@@ -29,7 +29,7 @@ def convertToBIT(string01):
             continue
     counter = len(liste)
     arrayBytes = bytes([i for i in liste])
-    print('yoooooo', arrayBytes)
+    #print('yoooooo', arrayBytes)
     arrayBytes = arrayBytes*hauteur
     return(arrayBytes, counter)
 
@@ -54,33 +54,36 @@ def decoderWrite(stringin):
 
 #pour les tests (séquence de bits et non le signal)
 def flipIt(stringin):
-    stringout = ''
+    stringout = []
     for i in stringin:
-        if i == '1':
-            stringout += '0'
-        if i == '0':
-            stringout += '1'
+        if str(i) == '1':
+            stringout.append(0)
+        if str(i) == '0':
+            stringout.append(1)
     return(stringout)
 
 
 
 # code pour tester avec write
 
-#stringTest = [b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00',  b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x00', b'\x01', b'\x00', b'\x01', b'\x00', b'\x00', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x00', b'\x01', b'\x01', b'\x00', b'\x01', b'\x00', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01', b'\x01']
-# stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-# stringC, counter = convertToBIT(stringTest)
-# show(stringC, counter)
-# codes = decoderWrite(stringTest)
-# for obj in codes:
-#     print('Type : ', obj.type)
-#     print('Data : ', obj.data,'\n')
+stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+stringTest = flipIt(stringTest)
+stringC, counter = convertToBIT(stringTest)
+show(stringC, counter)
+codes = decoderWrite(stringTest)
+for obj in codes:
+    print('Type : ', obj.type)
+    print('Data : ', obj.data,'\n')
 
 # code pour tester (version mise à jour)
 
-#stringToFlip = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
+# stringToFlip = '00000000000010101110110001001010011100010110000101001100101010100001011101001101100110011010111001000100101000000000000000'
 # stringToFlip = '00000000000000010100011010010011010111101100010110111001001101010111001011100101110010100111010000101001110101000000000000000000'
-# stringTest = flipIt(stringToFlip)
-# codes = decoder(stringTest, counter)
+# stringFlip = flipIt(stringToFlip)
+# stringTest, counter = convertToBytes(stringFlip)
+# show(stringTest, counter)
+# codes = decoder(stringTest)
 # for obj in codes:
 #     print('Type : ', obj.type)
 #     print('Data : ', obj.data,'\n')
