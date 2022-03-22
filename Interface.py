@@ -1,59 +1,61 @@
-
-
-from tkinter import *
+import tkinter
+from tkinter.ttk import *
 from tkinter import ttk, font
-from turtle import right
 #from facture import Facture
 
+class Interface:
 
-contour = Tk()
-contour.title('Identification de code-barres')
-contour.geometry('1000x1000')
+    def __init__(self, contour):
 
+        def AfficherFacture():
+            self.nouvellefenetre = Toplevel(self.contour)
+            self.nouvellefenetre.title("Facture")
+            self.nouvellefenetre.geometry("400x500")
+            label = Label(self.nouvellefenetre, text ='Voici une facture')
+            #label = Label(self.nouvellefenetre, text = Facture.facture())
+            label.pack()
+        
+        self.contour = contour
 
-prix = "PRIX TOTAL DE LA COMMANDE"
+        self.table = tkinter.Frame(self.contour)
+        self.table['bg'] ='#AC99F2'
+        self.table.pack()
 
-total = Label(contour, text='Total : '+prix).pack(side = BOTTOM)
+        self.tablescroll = Scrollbar(self.table)
+        self.tablescroll.pack(side=RIGHT, fill=Y)
 
-table = Frame(contour)
-table['bg'] = '#AC99F2'
-table.pack(side = LEFT)
+        self.matable = ttk.Treeview(self.table, yscrollcommand=self.tablescroll.set)
+        self.tablescroll.config(command=self.matable.yview)
 
-tablescroll = Scrollbar(table)
-tablescroll.pack(side=RIGHT, fill=Y)
+        self.matable['columns'] = ('nom', 'qte', 'prix', 'prixtot')
 
-matable = ttk.Treeview(table, yscrollcommand=tablescroll.set)
-tablescroll.config(command=matable.yview)
+        self.matable.column("#0", width=0,  stretch=NO)
+        self.matable.column("nom", anchor=CENTER, width=250)
+        self.matable.column("qte",anchor=CENTER, width=250)
+        self.matable.column("prix",anchor=CENTER,width=250)
+        self.matable.column("prixtot",anchor=CENTER,width=250)
 
-matable['columns'] = ('nom', 'qte', 'prix', 'prixtot')
+        self.matable.heading("#0",text="",anchor=CENTER)
+        self.matable.heading("nom",text="Article",anchor=CENTER)
+        self.matable.heading("qte",text="Quantité",anchor=CENTER)
+        self.matable.heading("prix",text="Prix unitaire",anchor=CENTER)
+        self.matable.heading("prixtot",text="Total de la ligne",anchor=CENTER)
 
-matable.column("#0", width=0,  stretch=NO)
-matable.column("nom", anchor=CENTER, width=200)
-matable.column("qte",anchor=CENTER, width=200)
-matable.column("prix",anchor=CENTER,width=200)
-matable.column("prixtot",anchor=CENTER,width=200)
+        #self.matable.insert(parent='',index='end',iid=0,text='', values=(facture['nom'], facture['Quantite'], facture['Prix_indiv'], facture['Prix']))
 
-matable.heading("#0",text="",anchor=CENTER)
-matable.heading("nom",text="Article",anchor=CENTER)
-matable.heading("qte",text="Quantité",anchor=CENTER)
-matable.heading("prix",text="Prix unitaire",anchor=CENTER)
-matable.heading("prixtot",text="Total de la ligne",anchor=CENTER)
+        self.matable.pack()
+        self.f2 = font.Font(family='Helvetica', size=20, weight="bold")
 
-matable.insert(parent='',index='end',iid=0,text='',
-values=('1','Ninja','101','Oklahoma', 'Moore'))
-matable.insert(parent='',index='end',iid=1,text='',
-values=('2','Ranger','102','Wisconsin', 'Green Bay'))
-matable.insert(parent='',index='end',iid=2,text='',
-values=('3','Deamon','103', 'California', 'Placentia'))
-matable.insert(parent='',index='end',iid=3,text='',
-values=('4','Dragon','104','New York' , 'White Plains'))
+        #total = Label(contour, text='Total : '+facture.totalFacture()+'$').pack(ipady=1)
+        self.total = Label(self.contour, text='Total : ' + '$', font = ("Courier", 30)).pack(ipady=1)
 
+        self.blackbutton = tkinter.Button(self.contour, text="Imprimer le reçu",fg="black", height = 2, width = 20) #Mettre le calcul de sommation en commande + affichage de la facture
+        self.blackbutton['font'] = self.f2
+        self.blackbutton.bind("<Button>", lambda e: AfficherFacture())
+        self.blackbutton.pack(side = BOTTOM)
 
-matable.pack()
-f2 = font.Font(family='Helvetica', size=20, weight="bold")
-
-blackbutton = Button(contour, text="Imprimer le reçu",fg="black", command=contour.quit, height = 2, width = 20) #Mettre le calcul de sommation en commande + affichage de la facture
-blackbutton['font'] = f2
-blackbutton.pack(side = BOTTOM)
-
-contour.mainloop()
+root = Tk()
+app = Interface(root)
+root.title('Identification de code-barres')
+root.geometry('1000x300') 
+root.mainloop()
