@@ -35,7 +35,7 @@ class Dico:
         
     # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
     def verificationPresence(self, Code):
-        if Code in self.dico:
+        if Code in self.dico.values():
             return(True)
         else:
             return(False)

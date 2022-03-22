@@ -5,11 +5,11 @@ class Facture:
         self.facture = {}
 
     def updateFacture(self, dico, item):
-        if item in self.facture:
+        if item in self.facture.values():
                 self.facture[str(item)]["Quantite"] += self.facture[str(item)]["Quantite_indiv"]
                 self.facture[str(item)]["Prix"] += self.facture[str(item)]["Prix_indiv"]
         else:
-            element = dico[str(item)]
+            element = dico.get(str(item))
             nom = element["Nom"]
             quantite, total_qt = element["Quantite"]
             prix, total_px = element["Prix"]
