@@ -16,6 +16,16 @@ class Interface:
             label = Label(self.nouvellefenetre, text = facture.printFacture())
             label.pack()
         
+        def AjouterElement(element):
+            if dico.verificationPresence(element) == True:
+                Facture.updateFacture(dico, element)
+            else:
+                self.introuvable = tk.Toplevel(self.contour)
+                label2 = Label(self.introuvable, text ="Le code-barres que vous avez entré est invalide, veuillez rééssayer.")
+                label2.pack()
+                retourbouton = Button(self.introuvable, text="OK", command = quit)
+                retourbouton.pack(side = tk.BOTTOM)
+
         self.contour = contour
 
         self.table = tk.Frame(self.contour)
@@ -60,20 +70,22 @@ class Interface:
         self.codeBarre = Label(self.contour, text="Veuillez entre votre code-barres ici : ")
         self.codeBarre.pack(side=tk.LEFT)
 
-        self.entrerCode= Entry(self.contour, text = tk.StringVar())
-        self.entrerCode.pack(side=tk.LEFT)
+        self.element = tk.StringVar
+
+        self.entrerCode= Entry(self.contour, textvariable = self.element)
+        self.entrerCode.pack()
         self.entrerCode.focus()
 
-        self.EntrerBouton = Button(self.contour, text="Entrée", command = facture.updateFacture(dico, item))
-        self.EntrerBouton.pack(ipady=10, side=tk.LEFT)
+        self.EntrerBouton = Button(self.contour, text="Entrée", command = self.entry)
+        self.EntrerBouton.pack()
+
+    def getvalue(self):
+        self.entry = self.element.get()
+        return self.entry    
 
 dico = Dico()
 dico.initDico()
 facture = Facture()
-facture.updateFacture(dico, '055671002136')
-facture.updateFacture(dico, '011150180511')
-facture.updateFacture(dico, '011150178006')
-facture.updateFacture(dico, '011150180511')
 root = tk.Tk()
 app = Interface(root, facture, dico)
 root.title('Identification de code-barres')
