@@ -34,10 +34,15 @@ def convertToBIT(string01):
     arrayBytes = arrayBytes*hauteur
     return(arrayBytes, counter)
 
-def show(im_code, largeur):
+def showpil(im_code, largeur):
     code = np.array([int(i) for i in im_code]).reshape(hauteur, largeur)
     data = im.fromarray(code)
     data.show()
+
+def show(im_code, largeur):
+    code = np.array([int(i) for i in im_code]).reshape(hauteur, largeur)
+    plt.imshow(code, 'gray')
+    plt.show()
 
 def decoder(stringin):
     # Trouver les code-barres dans l'image à partir de serial.print dans Arduino
@@ -67,16 +72,16 @@ def flipIt(stringin):
 
 # code pour tester avec write
 
-stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-stringTest = flipIt(stringTest)
-stringC, counter = convertToBIT(stringTest)
-print(stringC)
-show(stringC, counter)
-codes = decoderWrite(stringTest)
-for obj in codes:
-    print('Type : ', obj.type)
-    print('Data : ', obj.data,'\n')
+# stringTest = flipIt(stringTest)
+# stringC, counter = convertToBIT(stringTest)
+# print(stringC)
+# show(stringC, counter)
+# codes = decoderWrite(stringTest)
+# for obj in codes:
+#     print('Type : ', obj.type)
+#     print('Data : ', obj.data,'\n')
 
 # code pour tester (version mise à jour)
 
