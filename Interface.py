@@ -16,14 +16,16 @@ class Interface:
             label = Label(self.nouvellefenetre, text = facture.printFacture())
             label.pack()
         
-        def AjouterElement(element):
-            if dico.verificationPresence(element) == True:
-                Facture.updateFacture(dico, element)
+        def AjouterElement():
+            monItem = self.getvalue()
+            if dico.verificationPresence(monItem) == True:
+                facture.updateFacture(dico, monItem)
+                self.updateTable()
             else:
                 self.introuvable = tk.Toplevel(self.contour)
                 label2 = Label(self.introuvable, text ="Le code-barres que vous avez entré est invalide, veuillez rééssayer.")
                 label2.pack()
-                retourbouton = Button(self.introuvable, text="OK", command = quit)
+                retourbouton = Button(self.introuvable, text="OK", command = self.introuvable.destroy)
                 retourbouton.pack(side = tk.BOTTOM)
 
         self.contour = contour
@@ -52,11 +54,6 @@ class Interface:
         self.matable.heading("prix",text="Prix unitaire",anchor=tk.CENTER)
         self.matable.heading("prixtot",text="Total de la ligne",anchor=tk.CENTER)
 
-        itemiid = 0
-        for item in facture.keys():
-            self.matable.insert(parent='',index='end',iid=itemiid,text='', values=(facture[str(item)]['Article'], facture[str(item)]['Quantite'], facture[str(item)]['Prix_indiv'], facture[str(item)]['Prix']))
-            itemiid += 1
-
         self.matable.pack()
         self.f2 = font.Font(family='Helvetica', size=20, weight="bold")
 
@@ -70,18 +67,32 @@ class Interface:
         self.codeBarre = Label(self.contour, text="Veuillez entre votre code-barres ici : ")
         self.codeBarre.pack(side=tk.LEFT)
 
-        self.element = tk.StringVar
+        self.element = tk.StringVar()
+        self.button_pressed = tk.StringVar()
 
         self.entrerCode= Entry(self.contour, textvariable = self.element)
         self.entrerCode.pack()
         self.entrerCode.focus()
 
-        self.EntrerBouton = Button(self.contour, text="Entrée", command = self.entry)
+        self.EntrerBouton = Button(self.contour, text="Entrée", command=lambda: self.button_pressed.set("button pressed"))
         self.EntrerBouton.pack()
 
+        self.EntrerBouton.wait_variable(self.button_pressed)
+
+        if self.element.get() != '':
+            AjouterElement()
+
+
     def getvalue(self):
-        self.entry = self.element.get()
-        return self.entry    
+        entry = self.element.get()
+        print(entry)
+        return(entry) 
+
+    def updateTable(self):
+        itemiid = 0
+        for item in facture.keys():
+            self.matable.insert(parent='',index='end',iid=itemiid,text='', values=(facture[str(item)]['Article'], facture[str(item)]['Quantite'], facture[str(item)]['Prix_indiv'], facture[str(item)]['Prix']))
+            itemiid += 1
 
 dico = Dico()
 dico.initDico()
