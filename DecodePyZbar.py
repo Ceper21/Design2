@@ -22,12 +22,10 @@ def convertToBytes(string01):
 def convertToBIT(string01):
     liste = []
     for bit in string01:
-        if bit == 0:
-            liste.append(255)
         if bit == 1:
             liste.append(0)
         else:
-            continue
+            liste.append(255)
     counter = len(liste)
     arrayBytes = bytes([i for i in liste])
     #print('yoooooo', arrayBytes)

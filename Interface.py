@@ -7,7 +7,7 @@ from IdentificateurCodeBarre import Dico
 
 class Interface:
 
-    def __init__(self, contour, facture):
+    def __init__(self, contour, facture, dico):
 
         def AfficherFacture(facture):
             self.nouvellefenetre = tk.Toplevel(self.contour)
@@ -43,25 +43,40 @@ class Interface:
         self.matable.heading("prix",text="Prix unitaire",anchor=tk.CENTER)
         self.matable.heading("prixtot",text="Total de la ligne",anchor=tk.CENTER)
 
-        #self.matable.insert(parent='',index='end',iid=0,text='', values=(facture['nom'], facture['Quantite'], facture['Prix_indiv'], facture['Prix']))
+        itemiid = 0
+        for item in facture.keys():
+            self.matable.insert(parent='',index='end',iid=itemiid,text='', values=(facture[str(item)]['Article'], facture[str(item)]['Quantite'], facture[str(item)]['Prix_indiv'], facture[str(item)]['Prix']))
+            itemiid += 1
 
         self.matable.pack()
         self.f2 = font.Font(family='Helvetica', size=20, weight="bold")
 
-        #total = Label(contour, text='Total : '+facture.totalFacture()+'$').pack(ipady=1)
-        self.total = Label(self.contour, text='Total : ' + '$', font = ("Courier", 30)).pack(ipady=1)
+        self.total = Label(self.contour, text='Total : {:,.2f}$'.format(facture.totalFactureTaxe()[2])).pack(ipady=1)
 
         self.blackbutton = tk.Button(self.contour, text="Imprimer le reçu",fg="black", height = 2, width = 20) #Mettre le calcul de sommation en commande + affichage de la facture
         self.blackbutton['font'] = self.f2
         self.blackbutton.bind("<Button>", lambda e: AfficherFacture(facture))
         self.blackbutton.pack(side = tk.BOTTOM)
 
+        self.codeBarre = Label(self.contour, text="Veuillez entre votre code-barres ici : ")
+        self.codeBarre.pack(side=tk.LEFT)
+
+        self.entrerCode= Entry(self.contour, text = tk.StringVar())
+        self.entrerCode.pack(side=tk.LEFT)
+        self.entrerCode.focus()
+
+        self.EntrerBouton = Button(self.contour, text="Entrée", command = facture.updateFacture(dico, item))
+        self.EntrerBouton.pack(ipady=10, side=tk.LEFT)
+
 dico = Dico()
 dico.initDico()
 facture = Facture()
-facture.updateFacture(dico, {'Article': 'Pomme', 'Quantite_indiv': 3, 'Quantite': 1, 'Prix_indiv': 3, 'Prix': 4})
+facture.updateFacture(dico, '055671002136')
+facture.updateFacture(dico, '011150180511')
+facture.updateFacture(dico, '011150178006')
+facture.updateFacture(dico, '011150180511')
 root = tk.Tk()
-app = Interface(root, facture)
+app = Interface(root, facture, dico)
 root.title('Identification de code-barres')
-root.geometry('1000x300') 
+root.geometry('1000x500') 
 root.mainloop()

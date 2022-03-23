@@ -11,9 +11,9 @@ dicoL = {"0001101": "0", "0011001": "1", "0010011": "2", "0111101": "3", "010001
 dicoR = {"1110010" : "0", "1100110": "1", "1101100": "2", "1000010": "3", "1011100": "4",
 "1001110": "5", "1010000": "6", "1000100": "7", "1001000": "8", "1110100": "9"}
 
-class Dico:
+class Dico(dict):
     def __init__(self):
-        self.dico = {}
+        super().__init__()
 
     # Fonction qui serait appelée au lancement du code (juste une fois car prend du temps) pour placer les infos suivantes dans un dico :
     # {clée = Code-barre : [Nom du produit, Prix]} Bref à travailler... 
@@ -22,20 +22,20 @@ class Dico:
             elements = article.split(",") # elements = [[Code_barre, Qte, Nom, prix], [etc]]
             if len(elements[0]) == 13:
                 if len(elements) == 2:
-                    self.dico.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
+                    self.update({elements[0][1:]: {"Nom": "Non-défini", "Quantité": "Non-défini", "Prix": "Non-défini"}})
 
                 elif len(elements) == 3:
-                    self.dico.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
+                    self.update({elements[0][1:]: {"Nom": elements[-1], "Quantité": elements[1], "Prix": "Non-défini"}})
 
                 elif int(elements[0][0]) == 0:
-                    self.dico.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+                    self.update({elements[0][1:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
             if len(elements[0]) > 13:
-                self.dico.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
+                self.update({elements[0][2:]: {"Nom": elements[2], "Quantité": elements[1], "Prix": elements[-1]}})
         return (self)
         
     # On vérifie si le Code_barre à l'endroit ou celui inversé se trouve dans notre banque de données.
     def verificationPresence(self, Code):
-        if Code in self.dico.values():
+        if Code in self.keys():
             return(True)
         else:
             return(False)
@@ -94,3 +94,11 @@ def validationDernierChiffre(Code_barre):
         return True
     else:
         return False
+
+
+# Petit test pour print le dictionnaire au complet (watch out parce que ça part en malade!)
+
+# dico = Dico()
+# dico.initDico()
+# for key, value in dico.items():
+#     print(key, ' : ', value)

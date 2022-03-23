@@ -1,25 +1,27 @@
 from IdentificateurCodeBarre import Dico
-class Facture:
+class Facture(dict):
 
     def __init__(self):
-        self.facture = {}
+        super().__init__()
 
     def updateFacture(self, dico, item):
-        if item in self.facture.values():
-                self.facture[str(item)]["Quantite"] += self.facture[str(item)]["Quantite_indiv"]
-                self.facture[str(item)]["Prix"] += self.facture[str(item)]["Prix_indiv"]
-        else:
-            element = dico.get(str(item))
-            nom = element["Nom"]
-            quantite, total_qt = element["Quantite"]
-            prix, total_px = element["Prix"]
-            item_info = {'Article': nom, 'Quantite_indiv': quantite, 'Quantite': total_qt, 'Prix_indiv': prix, 'Prix': total_px}
-            self.facture.update({str(item): item_info})
+        if dico.verificationPresence(item) == True:
+            if item in self.keys():
+                    self[str(item)]["Quantite"] += 1
+                    self[str(item)]["Prix"] += float(self[str(item)]["Prix_indiv"])
+            else:
+                element = dico[str(item)]
+                nom = element["Nom"]
+                quantite = element["Quantité"]
+                prix = total_px = float(element["Prix"])
+                total_qt = 1
+                item_info = {'Article': nom, 'Quantite_indiv': quantite, 'Quantite': total_qt, 'Prix_indiv': prix, 'Prix': total_px}
+                self.update({str(item): item_info})
 
     def totalFacture(self):
         total = 0
-        for item in self.facture:
-            total += item["Prix"]
+        for item in self.keys():
+            total += self[str(item)]["Prix"]
         return(total)
 
     def totalFactureTaxe(self):
@@ -30,13 +32,14 @@ class Facture:
         return(totalTPS, totalTVQ, totalTaxe)
 
     def printFacture(self):
-        for i in self.facture:
-            string += str(self.facture['Article']) +'\n'
-            string += "\t {qut} à {prixInd}\t\t\t {prix}$\n".format(qut = str(self.facture['Quantite']), prixInd=str(self.facture['Prix_indiv']), prix=str(self.facture['Prix']))
-        TPS, TVQ, totalTaxe = self.facture.totalFactureTaxe()
-        string += '$' + str(self.facture.totalFacture()) + '\n'
-        string += 'TPS    $' + str(TPS) + '\n'
-        string += 'TVQ    $' + str(TVQ) + '\n'
-        string += 'TOTAL  $' + str(totalTaxe) + '\n'
+        string = 'Votre reçu!\n\n------------------------------------------------------------\n\n'
+        for i in self.keys():
+            string += str(self[str(i)]['Article']) +'\n'
+            string += "Prix unitaire: {prixInd} {espace} {prix}$\n\n".format(espace = ' '*(30-len(str(self[str(i)]['Prix']))), prixInd=str(self[str(i)]['Prix_indiv']), prix=str(self[str(i)]['Prix']))
+        TPS, TVQ, totalTaxe = self.totalFactureTaxe()
+        string += '\n\n\n------------------------------------------------------------\n\nAVANT LES TAXES{}${:,.2f}\n'.format(' '*(30-len('AVANT LES TAXES')), self.totalFacture())
+        string += 'TPS{}${:,.2f}\n'.format(' '*(30-len('TPS')), TPS)
+        string += 'TVQ{}${:,.2f}\n'.format(' '*(30-len('TVQ')), TVQ)
+        string += 'TOTAL{}${:,.2f}\n'.format(' '*(30-len('TOTAL')), totalTaxe) + '\n\n\n------------------------------------------------------------\n'
         string += "Merci d'avoir magasiner chez nous!"
         return(string)
