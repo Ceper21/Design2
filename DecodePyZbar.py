@@ -1,6 +1,7 @@
 import pyzbar.pyzbar as pyzbar
 import matplotlib.pyplot as plt
 import numpy as np
+from PIL import Image as im
 
 hauteur = 50
 
@@ -22,9 +23,9 @@ def convertToBIT(string01):
     liste = []
     for bit in string01:
         if bit == 0:
-            liste.append(0)
-        if bit == 1:
             liste.append(255)
+        if bit == 1:
+            liste.append(0)
         else:
             continue
     counter = len(liste)
@@ -35,8 +36,8 @@ def convertToBIT(string01):
 
 def show(im_code, largeur):
     code = np.array([int(i) for i in im_code]).reshape(hauteur, largeur)
-    plt.imshow(code, 'gray')
-    plt.show()
+    data = im.fromarray(code)
+    data.show()
 
 def decoder(stringin):
     # Trouver les code-barres dans l'image à partir de serial.print dans Arduino
@@ -66,15 +67,16 @@ def flipIt(stringin):
 
 # code pour tester avec write
 
-# stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+stringTest = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-# stringTest = flipIt(stringTest)
-# stringC, counter = convertToBIT(stringTest)
-# show(stringC, counter)
-# codes = decoderWrite(stringTest)
-# for obj in codes:
-#     print('Type : ', obj.type)
-#     print('Data : ', obj.data,'\n')
+stringTest = flipIt(stringTest)
+stringC, counter = convertToBIT(stringTest)
+print(stringC)
+show(stringC, counter)
+codes = decoderWrite(stringTest)
+for obj in codes:
+    print('Type : ', obj.type)
+    print('Data : ', obj.data,'\n')
 
 # code pour tester (version mise à jour)
 
