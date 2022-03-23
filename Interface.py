@@ -13,7 +13,6 @@ class Interface:
             self.nouvellefenetre = tk.Toplevel(self.contour)
             self.nouvellefenetre.title("Facture")
             self.nouvellefenetre.geometry("400x500")
-            #label = Label(self.nouvellefenetre, text ='Voici une facture')
             label = Label(self.nouvellefenetre, text = facture.printFacture())
             label.pack()
         
