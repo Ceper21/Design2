@@ -34,12 +34,12 @@ class Facture(dict):
     def printFacture(self):
         string = 'Votre reçu!\n\n------------------------------------------------------------\n\n'
         for i in self.keys():
-            string += str(self[str(i)]['Article']) +'\n'
-            string += "Prix unitaire: {prixInd} {espace} {prix}$\n\n".format(espace = ' '*(30-len(str(self[str(i)]['Prix']))), prixInd=str(self[str(i)]['Prix_indiv']), prix=str(self[str(i)]['Prix']))
+            string += str(self[str(i)]['Quantite']) + '      ' + str(self[str(i)]['Article']) +'\n'
+            string += "Prix unitaire: {prixInd}$ {espace} {prix}$\n\n".format(espace = ' '*(80-len(str(self[str(i)]['Prix']))), prixInd=str(self[str(i)]['Prix_indiv']), prix=str(self[str(i)]['Prix']))
         TPS, TVQ, totalTaxe = self.totalFactureTaxe()
-        string += '\n\n\n------------------------------------------------------------\n\nAVANT LES TAXES{}${:,.2f}\n'.format(' '*(30-len('AVANT LES TAXES')), self.totalFacture())
-        string += 'TPS{}${:,.2f}\n'.format(' '*(30-len('TPS')), TPS)
-        string += 'TVQ{}${:,.2f}\n'.format(' '*(30-len('TVQ')), TVQ)
-        string += 'TOTAL{}${:,.2f}\n'.format(' '*(30-len('TOTAL')), totalTaxe) + '\n\n\n------------------------------------------------------------\n'
+        string += '\n\n\n------------------------------------------------------------\n\nAVANT LES TAXES{}${:,.2f}\n'.format(' '*(80-len('AVANT LES TAXES')-len(str(self.totalFacture()))), self.totalFacture())
+        string += 'TPS{}${:,.2f}\n'.format(' '*(80-len('TPS')-len(str(self.totalFactureTaxe)[0])), TPS)
+        string += 'TVQ{}${:,.2f}\n'.format(' '*(80-len('TVQ')-len(str(self.totalFactureTaxe)[1])), TVQ)
+        string += 'TOTAL{}${:,.2f}\n'.format(' '*(80-len('TOTAL')-len(str(self.totalFactureTaxe)[2])), totalTaxe) + '\n\n\n------------------------------------------------------------\n'
         string += "Merci d'avoir magasiner chez nous!"
         return(string)
